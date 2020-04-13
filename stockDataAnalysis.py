@@ -1,85 +1,30 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[29]:
-
-
 import pandas as pd 
-
-
-# In[30]:
-
-
 import pandas_datareader as dr
-
-
-# In[31]:
-
-
 import matplotlib.pyplot as plt
-
-
-# In[32]:
-
-
 import numpy as np
-
-
-# In[33]:
-
-
 import cvxopt as opt
 from cvxopt import blas, solvers
-
-
-# In[34]:
-
-
 import datetime
+
 start = datetime.datetime(2019,8,1)
 end = datetime.datetime(2020,1,1)
-
-
-# In[35]:
-
 
 stock_data = dr.data.get_data_yahoo(['AAPL', 'F', 'IBM', 'AMZN'], start, end) #(stock name, start, end)
 selected = stock_data["Adj Close"]
 print(selected)
-
-
-# In[36]:
-
 
 selected.plot()
 plt.xlabel('Quarter')
 plt.ylabel('Value ($)')
 plt.show()
 
-
-# In[ ]:
-
-
-
-
-
-# In[37]:
-
-
 returns_quarterly = df.pct_change()
 expected_returns = returns_quarterly.mean()
 cov_quarterly = returns_quarterly.cov()
-
-
-# In[38]:
-
-
-cov_quarterly = returns_quarterly.cov()
 print(cov_quarterly)
-
-
-# In[48]:
-
 
 def return_portfolios(expected_returns, cov_matrix):
     port_returns = []
@@ -114,22 +59,8 @@ def return_portfolios(expected_returns, cov_matrix):
    
     return df
 
-
-# In[40]:
-
-
-
-
-
-# In[46]:
-
-
 random_portfolios = return_portfolios(expected_returns, cov_quarterly)
 print(random_portfolios)
-
-
-# In[53]:
-
 
 random_portfolios.plot.scatter(x='Volatility', y='Returns', figsize = (10,5))
 plt.xlabel('Volatility (Std. Deviation)')
